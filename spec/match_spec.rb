@@ -6,6 +6,7 @@ describe Match do
 	let(:player2) {double :player}
 
 	let(:match) { Match.new player1, player2 }
+	let(:match5) { Match.new player1, player2, 5}
 
 	let(:point) {double :point}
 
@@ -57,10 +58,16 @@ describe Match do
 		expect(match.games.last.points(player2)).to equal 1
 	end
 
-	def set_score(player1_points, player2_points)
+	def set_score(p1_game1, p2_game1, p1_game2=0, p2_game2=0, match=match)
 		match.new_game
-		player1_points.times{ match.increment_score(player1) }
-		player2_points.times{ match.increment_score(player2) }
+		increment(p1_game1, match, player1)
+		increment(p2_game1, match, player2)
+		increment(p1_game2, match, player1)
+		increment(p2_game2, match, player2)
+	end
+
+	def increment(number, match, player)
+		number.times{ match.increment_score(player) }
 	end
 
 	it 'can increment score from 4-7' do
@@ -83,6 +90,64 @@ describe Match do
 		expect(match.games.length).to equal 2
 		expect(match.games.last.points(player1)).to equal 0
 	end
+
+	it 'can increment from 7-11, 0-10 so player2 wins match' do
+		set_score(7, 11, 6, 10)
+		match.increment_score(player2)
+		expect(match.games.length).to equal 2
+		expect(match.games.last.points(player2)).to equal 11
+	end
+
+	it 'can tell winning 2 games wins default match' do
+		expect(match.games_target).to equal 2
+	end
+
+	it 'can tell winning 3 games wins best-of-five match' do
+		expect(match5.games_target).to equal 3
+	end
+
+	it 'can tell how many games a player has won' do
+		set_score(7, 11, 11, 6)
+		expect(match.games_won(player2)).to equal 1
+		expect(match.games_won(player1)).to equal 1
+	end
+
+	it 'can tell if match winner in default best-of-three match' do
+		set_score(7, 11, 7, 10)
+		match.increment_score(player2)
+		expect(match.match_winner).to equal player2
+	end
+
+	it 'can tell when no player has won yet' do
+		set_score(7, 11, 7, 9)
+		match.increment_score(player2)
+		expect(match.match_winner).to be_nil
+	end
+
+	it 'can tell if match winner in best-of-five match' do
+		set_score(7, 11, 7, 11, match5)
+		increment(11, match5, player1)
+		increment(11, match5, player1)
+		increment(10, match5, player2)
+		expect(match5.match_winner).to be_nil
+		match5.increment_score(player2)
+		expect(match5.match_winner).to equal player2
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	xit 'can decrement player1\'s score from 0-0 in second game' do
 
