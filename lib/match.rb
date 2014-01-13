@@ -5,7 +5,7 @@ class Match
 
 	attr_accessor :games
 
-	def initialize(player1, player2, best_of=1)
+	def initialize(player1, player2, best_of=3)
 		@player1 = player1
 		@player2 = player2
 		@best_of = best_of
@@ -19,6 +19,13 @@ class Match
 	def increment_score(winner)
 		new_point = Point.new(winner, server, player1_end)
 		@games.last.addpoint(new_point)
+		if @games.last.winner
+			new_game
+		end
+	end
+
+	def decrement_score(winner)
+		@games.last.deletepoint(winner)
 	end
 
 	def server

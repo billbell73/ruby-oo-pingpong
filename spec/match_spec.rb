@@ -11,7 +11,9 @@ describe Match do
 
 	let(:game0) { double :game, total_points: 0}
 	let(:game1) { double :game, total_points: 2}
-	let(:game2) { double :game, total_points: 7, player_points: [[4],[3]] }
+	let(:game2) { double :game, total_points: 7}
+
+	
 
 
 	it 'can start a game' do 
@@ -55,10 +57,35 @@ describe Match do
 		expect(match.games.last.points(player2)).to equal 1
 	end
 
-	it 'can increment score from 4-3' do
-		match.games = [game2]
+	def set_score(player1_points, player2_points)
+		match.new_game
+		player1_points.times{ match.increment_score(player1) }
+		player2_points.times{ match.increment_score(player2) }
+	end
+
+	it 'can increment score from 4-7' do
+		set_score(4, 7)
 		match.increment_score(player2)
-		expect(match.games.last.points(player2)).to equal 4
+		expect(match.games.last.points(player1)).to equal 4
+		expect(match.games.last.points(player2)).to equal 8
+	end
+
+	it 'can decrement player1\'s score from 4-7' do
+		set_score(4, 7)
+		match.decrement_score(player1)
+		expect(match.games.last.points(player1)).to equal 3
+		expect(match.games.last.points(player2)).to equal 7
+	end
+
+	it 'can increment from 10-7 so player1 wins game and new game starts' do
+		set_score(10, 7)
+		match.increment_score(player1)
+		expect(match.games.length).to equal 2
+		expect(match.games.last.points(player1)).to equal 0
+	end
+
+	xit 'can decrement player1\'s score from 0-0 in second game' do
+
 	end
 
 

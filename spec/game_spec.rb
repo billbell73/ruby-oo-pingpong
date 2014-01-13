@@ -26,7 +26,7 @@ describe Game do
 
 	it 'can delete point from player\'s in-game score' do
 		game.addpoint(point1)
-		game.deletepoint(point1)
+		game.deletepoint(player1)
 		expect(game.points(player1)).to equal 0
 	end
 

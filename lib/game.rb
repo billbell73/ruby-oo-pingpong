@@ -15,8 +15,8 @@ class Game
 		@player_points[index] << point
 	end
 
-	def deletepoint(point)
-		index = @player_index[point.winner]
+	def deletepoint(player)
+		index = @player_index[player]
 		@player_points[index].pop
 	end
 
