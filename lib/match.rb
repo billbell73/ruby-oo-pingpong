@@ -11,8 +11,8 @@ class Match
 		@games = []
 	end 
 
-	def new_game(parity=:odd)
-		@games << Game.new(@player1, @player2, parity)
+	def new_game
+		@games << Game.new(@player1, @player2)
 	end
 
 	def increment_score(player)
@@ -22,19 +22,15 @@ class Match
 	end
 
 	def server
-		if game_odd
-			odd_game_server
-		end
-
+		game_odd == 1? odd_game_server : even_game_server
 	end
 
 	def odd_game_server
-		if points_serve_calc == 0
-			@player1
-		else
-			@player2
-		end
+		points_serve_calc == 0? @player1 : @player2
+	end
 
+	def even_game_server
+		points_serve_calc == 0? @player2 : @player1
 	end
 
 	def points_serve_calc

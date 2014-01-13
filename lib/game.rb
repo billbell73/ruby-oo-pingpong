@@ -1,12 +1,11 @@
 class Game
 
-	def initialize(player1, player2, parity=:odd)
+	def initialize(player1, player2)
 		@player_points = [[],[]]
 		@player1 = player1
 		@player2 = player2
 		@player_index = { @player1 => 0, @player2 => 1 }
 		@winner = nil
-		@parity = parity
 	end
 
 	def addpoint(point)

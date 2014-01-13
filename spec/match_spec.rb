@@ -7,7 +7,8 @@ let(:player2) {double :player}
 
 let(:match) { Match.new player1, player2 }
 
-let(:game1) { double :game, total_points: 5}
+let(:game0) { double :game, total_points: 0}
+let(:game1) { double :game, total_points: 4}
 let(:game2) { double :game, total_points: 7}
 
 it 'can start a game' do 
@@ -21,6 +22,11 @@ it 'can ascertain when game odd or even' do
 end
 
 it 'says player1 serving after 5 points' do
+	match.games = [game1]
+	expect(match.server).to equal player1
+end
+
+it 'says player1 serving after 0 points' do
 	match.games = [game1]
 	expect(match.server).to equal player1
 end
