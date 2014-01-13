@@ -29,6 +29,10 @@ class Game
 		@player_points[index-1].length
 	end
 
+	def total_points
+		@player_points[0].length + @player_points[1].length
+	end
+
 	def winner
 		check_winner(@player1)
 		check_winner(@player2)
