@@ -1,3 +1,5 @@
+# require_relative 'point'
+
 class Game
 
 	def initialize(player1, player2)
@@ -18,7 +20,7 @@ class Game
 		@player_points[index].pop
 	end
 
-	def player_points(player)
+	def points(player)
 		index = @player_index[player]
 		@player_points[index].length
 	end
@@ -39,7 +41,7 @@ class Game
 	end
 
 	def check_winner(player)
-		if player_points(player) == 11 && opponent_points(player) <= 9
+		if points(player) == 11 && opponent_points(player) <= 9
 			@winner = player
 		elsif opponent_points(player) > 10 && two_ahead?(player)
 			@winner = player
@@ -47,7 +49,7 @@ class Game
 	end
 
 	def two_ahead?(player)
-		player_points(player) == opponent_points(player) + 2
+		points(player) == opponent_points(player) + 2
 	end
 
 end

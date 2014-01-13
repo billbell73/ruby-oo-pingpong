@@ -1,4 +1,5 @@
 # require_relative 'game'
+# require_relative 'point'
 
 class Match
 
@@ -15,14 +16,13 @@ class Match
 		@games << Game.new(@player1, @player2)
 	end
 
-	def increment_score(player)
-
-		new_point = Point.new(player, server, player1_end)
-
+	def increment_score(winner)
+		new_point = Point.new(winner, server, player1_end)
+		@games.last.addpoint(new_point)
 	end
 
 	def server
-		game_odd == 1? odd_game_server : even_game_server
+		game_odd? == true ? odd_game_server : even_game_server
 	end
 
 	def odd_game_server
@@ -37,8 +37,12 @@ class Match
 		(@games.last.total_points/2) % 2
 	end 
 
-	def game_odd
-		@games.length % 2
+	def game_odd?
+		@games.length % 2 == 1? true : false
+	end
+
+	def player1_end
+		game_odd? == true ? :left : :right
 	end
 
 

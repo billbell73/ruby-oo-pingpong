@@ -16,18 +16,18 @@ describe Game do
 	end
 
 	it 'no points for players at start' do
-		expect(game.player_points(player2)).to equal 0
+		expect(game.points(player2)).to equal 0
 	end
 
 	it 'can add point to a player\'s in-game score' do
 		game.addpoint(point1)
-		expect(game.player_points(player1)).to equal 1
+		expect(game.points(player1)).to equal 1
 	end
 
 	it 'can delete point from player\'s in-game score' do
 		game.addpoint(point1)
 		game.deletepoint(point1)
-		expect(game.player_points(player1)).to equal 0
+		expect(game.points(player1)).to equal 0
 	end
 
 	it 'no winner if neither player has reached 11' do
