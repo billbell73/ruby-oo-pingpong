@@ -32,17 +32,17 @@ describe Game do
 
 	it 'no winner if neither player has reached 11' do
 		set_score 10, 10
-		expect(game.winner).to be_nil
+		expect(game.ascertain_winner(player1, player2)).to be_nil
 	end
 
 	it 'player 1 wins if reaches 11 and player 2 has none' do
 		set_score 11, 0
-		expect(game.winner).to equal player1
+		expect(game.ascertain_winner(player1, player2)).to equal player1
 	end
 
 	it 'player 2 wins if reaches 11 and player 1 has none' do
 		set_score 0, 11
-		expect(game.winner).to equal player2
+		expect(game.ascertain_winner(player1, player2)).to equal player2
 	end
 
 	it 'can easily access points of opponent' do
@@ -52,17 +52,17 @@ describe Game do
 
 	it 'player 1 doesn\'t win if gets 11, but player 2 has 10' do
 	 	set_score 11, 10
-	 	expect(game.winner).to be_nil
+	 	expect(game.ascertain_winner(player1, player2)).to be_nil
 	end
 
 	it 'if player 2 has more than 11, player 1 wins on 13' do
 		set_score 13, 11
-		expect(game.winner).to equal player1
+		expect(game.ascertain_winner(player1, player2)).to equal player1
 	end
 
 	it 'if player 2 has 14 and player 1 has 13, no winner' do
 		set_score 13, 14
-		expect(game.winner).to be_nil
+		expect(game.ascertain_winner(player1, player2)).to be_nil
 	end
 
 	it 'knows the total points played' do
