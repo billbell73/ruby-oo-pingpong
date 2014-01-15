@@ -1,5 +1,5 @@
-# require_relative 'game'
-# require_relative 'point'
+require_relative 'game'
+require_relative 'point'
 
 class Match
 
