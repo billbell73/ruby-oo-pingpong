@@ -72,8 +72,9 @@ class Match
 		game_odd? == true ? :left : :right
 	end
 
-
-
+	def game_score(game_no, player)
+		@games[game_no - 1].player_points(player)
+	end
 
 
 end

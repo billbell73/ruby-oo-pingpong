@@ -42,6 +42,20 @@ describe Match do
 		expect(match.server).to equal player2
 	end
 
+	it 'knows last point and next point server' do
+		set_score(1, 0)
+		expect(match.server).to equal player1
+		match.increment_score(player2)
+		expect(match.server).to equal player2
+	end
+
+	it 'really knows last point and next point server' do
+		set_score(4, 4)
+		expect(match.server).to equal player1
+		match.increment_score(player2)
+		expect(match.server).to equal player1
+	end
+
 	it 'says player1 on left for 1st game' do
 		match.games = [game1]
 		expect(match.player1_end).to equal :left
@@ -133,6 +147,17 @@ describe Match do
 		match5.increment_score(player2)
 		expect(match5.match_winner).to equal player2
 	end
+
+	it 'can tell player1 game 1 score' do
+		set_score(3, 11, 2, 4)
+		expect(match.game_score(1, player1)).to equal 3
+	end
+
+	it 'can tell player2 game 2 score' do
+		set_score(3, 11, 2, 4)
+		expect(match.game_score(2, player2)).to equal 4
+	end
+
 
 
 
