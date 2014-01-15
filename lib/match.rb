@@ -15,13 +15,13 @@ class Match
 	end 
 
 	def new_game
-		@games << Game.new(@player1, @player2)
+		@games << Game.new
 	end
 
-	def increment_score(winner)
-		new_point = Point.new(winner, server, player1_end)
+	def increment_score(point_winner)
+		new_point = Point.new(point_winner, server, player1_end)
 		@games.last.addpoint(new_point)
-		if @games.last.winner
+		if @games.last.record_if_won_game(point_winner)
 			finish_game
 		end
 	end
