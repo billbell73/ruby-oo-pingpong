@@ -6,10 +6,10 @@ class Match
 	attr_accessor :games
 	attr_reader :match_winner
 
-	def initialize(player1, player2, best_of=3)
+	def initialize(player1, player2, choices)
 		@player1 = player1
 		@player2 = player2
-		@best_of = best_of
+		@choices = choices
 		@games = []
 		@match_winner = nil
 	end 
@@ -27,7 +27,7 @@ class Match
 	end
 
 	def games_target
-		(@best_of / 2) + 1
+		(@choices.best_of / 2) + 1
 	end
 
 	def games_won(player)

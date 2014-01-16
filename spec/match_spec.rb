@@ -5,16 +5,17 @@ describe Match do
 	let(:player1) {double :player}
 	let(:player2) {double :player}
 
-	let(:match) { Match.new player1, player2 }
-	let(:match5) { Match.new player1, player2, 5}
+	let(:choices1) { double :choices, best_of: 3 }
+	let(:choices2) { double :choices, best_of: 5 }
+
+	let(:match) { Match.new player1, player2, choices1 }
+	let(:match5) { Match.new player1, player2, choices2 }
 
 	let(:point) {double :point}
 
 	let(:game0) { double :game, total_points: 0}
 	let(:game1) { double :game, total_points: 2}
 	let(:game2) { double :game, total_points: 7}
-
-	
 
 
 	it 'can start a game' do 

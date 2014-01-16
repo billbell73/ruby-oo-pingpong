@@ -1,3 +1,0 @@
-class Scorer
-
-end
