@@ -19,7 +19,7 @@ class Match
 	end
 
 	def increment_score(point_winner)
-		new_point = Point.new(point_winner, server, player1_end)
+		new_point = Point.new(point_winner, server, player1_on_left?)
 		@games.last.addpoint(new_point)
 		if @games.last.record_if_won_game(point_winner)
 			finish_game
@@ -64,8 +64,8 @@ class Match
 		@games.length % 2 == 1? true : false
 	end
 
-	def player1_end
-		game_odd? == true ? :left : :right
+	def player1_on_left?
+		@choices.player1_on_left?(@games.length + 1)
 	end
 
 	def game_score(game_no, player)

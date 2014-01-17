@@ -1,4 +1,5 @@
 require 'match'
+require 'choices'
 
 describe Match do
 
@@ -8,7 +9,9 @@ describe Match do
 	let(:choices1) { double :choices, games_target: 2 }
 	let(:choices2) { double :choices, games_target: 3 }
 
-	let(:match) { Match.new player1, player2, choices1 }
+	let(:choices3) { Choices.new(3, true, player1)}
+
+	let(:match) { Match.new player1, player2, choices3 }
 	let(:match5) { Match.new player1, player2, choices2 }
 
 	let(:point) {double :point}
@@ -16,6 +19,18 @@ describe Match do
 	let(:game0) { double :game, total_points: 0}
 	let(:game1) { double :game, total_points: 2}
 	let(:game2) { double :game, total_points: 7}
+
+	def set_score(p1_game1, p2_game1, p1_game2=0, p2_game2=0, match=match)
+		match.new_game
+		increment(p1_game1, match, player1)
+		increment(p2_game1, match, player2)
+		increment(p1_game2, match, player1)
+		increment(p2_game2, match, player2)
+	end
+
+	def increment(number, match, player)
+		number.times{ match.increment_score(player) }
+	end
 
 
 	it 'can start a game' do 
@@ -57,32 +72,16 @@ describe Match do
 		expect(match.server).to equal player1
 	end
 
-	it 'says player1 on left for 1st game' do
-		match.games = [game1]
-		expect(match.player1_end).to equal :left
-	end
-
-	it 'says player1 on right for 2nd game' do
-		match.games = [game0, game1]
-		expect(match.player1_end).to equal :right
+	xit 'can tell if player1 on left' do
+		set_score(3, 11, 4, 2)
+		expect(choices1).to receive(:player1_on_left?).with(2)
+		match.player1_on_left?
 	end
 
 	it 'can increment score from 0-0' do
 		match.new_game
 		match.increment_score(player2)
 		expect(match.games.last.player_points(player2)).to equal 1
-	end
-
-	def set_score(p1_game1, p2_game1, p1_game2=0, p2_game2=0, match=match)
-		match.new_game
-		increment(p1_game1, match, player1)
-		increment(p2_game1, match, player2)
-		increment(p1_game2, match, player1)
-		increment(p2_game2, match, player2)
-	end
-
-	def increment(number, match, player)
-		number.times{ match.increment_score(player) }
 	end
 
 	it 'can increment score from 4-7' do
@@ -113,8 +112,6 @@ describe Match do
 		expect(match.games.last.player_points(player2)).to equal 11
 	end
 
-	
-
 	it 'can tell how many games a player has won' do
 		set_score(7, 11, 11, 6)
 		expect(match.games_won(player2)).to equal 1
@@ -133,7 +130,7 @@ describe Match do
 		expect(match.match_winner).to be_nil
 	end
 
-	it 'can tell if match winner in best-of-five match' do
+	xit 'can tell if match winner in best-of-five match' do
 		set_score(7, 11, 7, 11, match5)
 		increment(11, match5, player1)
 		increment(11, match5, player1)

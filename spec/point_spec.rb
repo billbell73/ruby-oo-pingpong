@@ -2,7 +2,7 @@ require 'point'
 
 describe Point do 
 
-	let(:point) { Point.new(:player1, :player2, :left) }
+	let(:point) { Point.new(:player1, :player2, true) }
 
 	it 'has a winner' do
 		 expect(point.winner).to equal :player1
@@ -13,7 +13,7 @@ describe Point do
 	end
 
 	it 'knows which end player 1 is' do
-		expect(point.player1_end).to equal :left
+		expect(point.player1_on_left).to equal true
 	end
 
 
