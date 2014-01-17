@@ -8,4 +8,8 @@ class Choices
 		@start_server = player
 	end
 
+	def games_target
+		(@best_of / 2) + 1
+	end
+
 end

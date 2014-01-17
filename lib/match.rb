@@ -26,18 +26,14 @@ class Match
 		end
 	end
 
-	def games_target
-		(@choices.best_of / 2) + 1
-	end
-
 	def games_won(player)
 		@games.count { |game| game.winner == player }
 	end
 
 	def finish_game
-		if games_won(@player1) == games_target
+		if games_won(@player1) == @choices.games_target
 			@match_winner = @player1
-		elsif games_won(@player2) == games_target
+		elsif games_won(@player2) == @choices.games_target
 			@match_winner = @player2
 		else
 			new_game

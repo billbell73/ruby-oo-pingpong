@@ -5,8 +5,8 @@ describe Match do
 	let(:player1) {double :player}
 	let(:player2) {double :player}
 
-	let(:choices1) { double :choices, best_of: 3 }
-	let(:choices2) { double :choices, best_of: 5 }
+	let(:choices1) { double :choices, games_target: 2 }
+	let(:choices2) { double :choices, games_target: 3 }
 
 	let(:match) { Match.new player1, player2, choices1 }
 	let(:match5) { Match.new player1, player2, choices2 }
@@ -113,13 +113,7 @@ describe Match do
 		expect(match.games.last.player_points(player2)).to equal 11
 	end
 
-	it 'can tell winning 2 games wins default match' do
-		expect(match.games_target).to equal 2
-	end
-
-	it 'can tell winning 3 games wins best-of-five match' do
-		expect(match5.games_target).to equal 3
-	end
+	
 
 	it 'can tell how many games a player has won' do
 		set_score(7, 11, 11, 6)
@@ -160,23 +154,12 @@ describe Match do
 	end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	xit 'can decrement player1\'s score from 0-0 in second game' do
-
+	it 'can decrement player1\'s score from 0-0 in second game' do
+		pending("implementing deletion across game boundaries") do
+			set_score(3, 11, 0, 0)
+			match.decrement_score(player2)
+			expect(match.games_score(1, player2)).to equal 10
+		end
 	end
 
 
