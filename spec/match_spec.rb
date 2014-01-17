@@ -39,16 +39,16 @@ describe Match do
 
 	it 'knows last point and next point server' do
 		set_score(1, 0)
-		expect(match.player1_serving?).to equal true
+		expect(match.server).to equal player1
 		match.increment_score(player2)
-		expect(match.player1_serving?).to equal false
+		expect(match.server).to equal player2
 	end
 
 	it 'really knows last point and next point server' do
 		set_score(4, 4)
-		expect(match.player1_serving?).to equal true
+		expect(match.server).to equal player1
 		match.increment_score(player2)
-		expect(match.player1_serving?).to equal true
+		expect(match.server).to equal player1
 	end
 
 	xit 'can tell if player1 on left' do
