@@ -18,10 +18,14 @@ class Match
 		@games << Game.new
 	end
 
+	def current_game
+		@games.last
+	end
+
 	def increment_score(point_winner)
 		new_point = Point.new(point_winner, server, player1_on_left?)
-		@games.last.addpoint(new_point)
-		if @games.last.record_if_won_game(point_winner)
+		current_game.addpoint(new_point)
+		if current_game.record_if_won_game(point_winner)
 			finish_game
 		end
 	end
@@ -41,31 +45,19 @@ class Match
 	end
 
 	def decrement_score(winner)
-		@games.last.deletepoint(winner)
-	end
-
-	def server
-		game_odd? == true ? odd_game_server : even_game_server
-	end
-
-	def odd_game_server
-		points_serve_calc == 0? @player1 : @player2
-	end
-
-	def even_game_server
-		points_serve_calc == 0? @player2 : @player1
-	end
-
-	def points_serve_calc
-		(@games.last.total_points/2) % 2
-	end 
-
-	def game_odd?
-		@games.length % 2 == 1? true : false
+		current_game.deletepoint(winner)
 	end
 
 	def player1_on_left?
-		@choices.player1_on_left?(@games.length + 1)
+		@choices.player1_on_left?(@games.length)
+	end
+
+	def player1_serving?
+		@choices.player1_serving?(@games.length, current_game.total_points)
+	end
+
+	def server
+		player1_serving? == true ? @player1 : @player2
 	end
 
 	def game_score(game_no, player)

@@ -9,7 +9,7 @@ describe Match do
 	let(:choices1) { double :choices, games_target: 2 }
 	let(:choices2) { double :choices, games_target: 3 }
 
-	let(:choices3) { Choices.new(3, true, player1)}
+	let(:choices3) { Choices.new(3, true, true)}
 
 	let(:match) { Match.new player1, player2, choices3 }
 	let(:match5) { Match.new player1, player2, choices2 }
@@ -32,50 +32,39 @@ describe Match do
 		number.times{ match.increment_score(player) }
 	end
 
-
 	it 'can start a game' do 
 		match.new_game
 		expect(match.games.length).to equal 1
 	end
 
-	it 'can ascertain when game odd or even' do
-		match.new_game
-		expect(match.game_odd?).to equal true
-	end
-
-	it 'says player1 serving after 0 points' do
-		match.games = [game0]
-		expect(match.server).to equal player1
-	end
-
-	it 'says player2 serving after 2 points' do
-		match.games = [game1]
-		expect(match.server).to equal player2
-	end
-
-	it 'says player2 serving after 7 points' do
-		match.games = [game2]
-		expect(match.server).to equal player2
-	end
-
 	it 'knows last point and next point server' do
 		set_score(1, 0)
-		expect(match.server).to equal player1
+		expect(match.player1_serving?).to equal true
 		match.increment_score(player2)
-		expect(match.server).to equal player2
+		expect(match.player1_serving?).to equal false
 	end
 
 	it 'really knows last point and next point server' do
 		set_score(4, 4)
-		expect(match.server).to equal player1
+		expect(match.player1_serving?).to equal true
 		match.increment_score(player2)
-		expect(match.server).to equal player1
+		expect(match.player1_serving?).to equal true
 	end
 
 	xit 'can tell if player1 on left' do
 		set_score(3, 11, 4, 2)
 		expect(choices1).to receive(:player1_on_left?).with(2)
 		match.player1_on_left?
+	end
+
+	it 'can tell if player1 on left in first game' do
+		set_score(3, 10)	
+		expect(match.player1_on_left?).to equal true
+	end
+
+	it 'can tell if player1 on left in second game' do
+		set_score(3, 11, 0, 2)	
+		expect(match.player1_on_left?).to equal false
 	end
 
 	it 'can increment score from 0-0' do
