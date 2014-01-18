@@ -26,7 +26,7 @@ class Match
 		new_point = Point.new(point_winner, server, player1_on_left?)
 		current_game.addpoint(new_point)
 		if current_game.record_if_won_game(point_winner)
-			finish_game
+			finish_game(point_winner)
 		end
 	end
 
@@ -34,11 +34,9 @@ class Match
 		@games.count { |game| game.winner == player }
 	end
 
-	def finish_game
-		if games_won(@player1) == @choices.games_target
-			@match_winner = @player1
-		elsif games_won(@player2) == @choices.games_target
-			@match_winner = @player2
+	def finish_game(point_winner)
+		if games_won(point_winner) == @choices.games_target
+			@match_winner = point_winner
 		else
 			new_game
 		end
@@ -57,7 +55,7 @@ class Match
 	end
 
 	def server
-		player1_serving? == true ? @player1 : @player2
+		player1_serving? ? @player1 : @player2
 	end
 
 	def game_score(game_no, player)

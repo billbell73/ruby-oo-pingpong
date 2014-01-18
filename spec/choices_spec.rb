@@ -1,4 +1,5 @@
 require 'choices'
+require 'gametype'
 
 describe Choices do 
 
@@ -26,20 +27,20 @@ describe Choices do
 		expect(choices2.player1_on_left?(4)).to equal true
 	end
 
-	it 'can tell game type \'even\'' do
-		expect(choices1.game_type(2)).to equal :even
-	end
+	# it 'can tell game type \'even\'' do
+	# 	expect(choices1.game_type(2)).to equal :even
+	# end
 
-	it 'can tell game type \'last\'' do
-		expect(choices1.game_type(3)).to equal :last
-	end
+	# it 'can tell game type \'last\'' do
+	# 	expect(choices1.game_type(3)).to equal :last
+	# end
 
-	it 'mandates 2 serves from one player then 2 serves by other' do
-		expect(choices1.serve_toggle(0)).to equal 0							
-		expect(choices1.serve_toggle(1)).to equal 0
-		expect(choices1.serve_toggle(2)).to equal 1
-		expect(choices1.serve_toggle(3)).to equal 1
-	end
+	# it 'mandates 2 serves from one player then 2 serves by other' do
+	# 	expect(choices1.serve_toggle(0)).to equal 0							
+	# 	expect(choices1.serve_toggle(1)).to equal 0
+	# 	expect(choices1.serve_toggle(2)).to equal 1
+	# 	expect(choices1.serve_toggle(3)).to equal 1
+	# end
 
 
 	it 'says player1 serving after 0 points if starts serving' do

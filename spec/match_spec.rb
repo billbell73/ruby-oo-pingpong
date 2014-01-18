@@ -6,12 +6,12 @@ describe Match do
 	let(:player1) {double :player}
 	let(:player2) {double :player}
 
-	let(:choices1) { double :choices, games_target: 2 }
+	let(:choices1) { double :choices, games_target: 2, player1_serving?: true, player1_on_left?: true }
 	let(:choices2) { double :choices, games_target: 3 }
 
 	let(:choices3) { Choices.new(3, true, true)}
 
-	let(:match) { Match.new player1, player2, choices3 }
+	let(:match) { Match.new player1, player2, choices1 }
 	let(:match5) { Match.new player1, player2, choices2 }
 
 	let(:point) {double :point}
@@ -39,16 +39,11 @@ describe Match do
 
 	it 'knows last point and next point server' do
 		set_score(1, 0)
-		expect(match.server).to equal player1
+		expect(choices1).to receive(:player1_serving?).with(1,1)
+		match.server
 		match.increment_score(player2)
-		expect(match.server).to equal player2
-	end
-
-	it 'really knows last point and next point server' do
-		set_score(4, 4)
-		expect(match.server).to equal player1
-		match.increment_score(player2)
-		expect(match.server).to equal player1
+		expect(choices1).to receive(:player1_serving?).with(1,2)
+		match.server
 	end
 
 	xit 'can tell if player1 on left' do
@@ -64,7 +59,8 @@ describe Match do
 
 	it 'can tell if player1 on left in second game' do
 		set_score(3, 11, 0, 2)	
-		expect(match.player1_on_left?).to equal false
+		expect(choices1).to receive(:player1_on_left?).with(2)
+		match.player1_on_left?
 	end
 
 	it 'can increment score from 0-0' do
@@ -147,6 +143,8 @@ describe Match do
 			expect(match.games_score(1, player2)).to equal 10
 		end
 	end
+
+
 
 
 	
