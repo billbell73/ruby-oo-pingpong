@@ -46,20 +46,9 @@ describe Match do
 		match.server
 	end
 
-	xit 'can tell if player1 on left' do
-		set_score(3, 11, 4, 2)
-		expect(choices1).to receive(:player1_on_left?).with(2)
-		match.player1_on_left?
-	end
-
-	it 'can tell if player1 on left in first game' do
-		set_score(3, 10)	
-		expect(match.player1_on_left?).to equal true
-	end
-
-	it 'can tell if player1 on left in second game' do
+	it 'can tell if player1 on left' do
 		set_score(3, 11, 0, 2)	
-		expect(choices1).to receive(:player1_on_left?).with(2)
+		expect(choices1).to receive(:player1_on_left?).with(2, 2)
 		match.player1_on_left?
 	end
 
