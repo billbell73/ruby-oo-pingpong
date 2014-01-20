@@ -16,15 +16,20 @@ describe Choices do
 	end
 
 	it 'says player1 on left for 1st game' do
-		expect(choices1.player1_on_left?(1)).to equal true
+		expect(choices1.player1_on_left?(1, 4)).to equal true
 	end
 
 	it 'says player1 on right for 2nd game' do
-		expect(choices1.player1_on_left?(2)).to equal false
+		expect(choices1.player1_on_left?(2, 10)).to equal false
 	end
 
 	it 'can tell player side in normal game of 5 game match' do
-		expect(choices2.player1_on_left?(4)).to equal true
+		expect(choices2.player1_on_left?(4, 2)).to equal true
+	end
+
+	it 'can tell player side in last possible game of match' do
+		expect(choices2.player1_on_left?(5, 3)).to equal false
+		expect(choices2.player1_on_left?(5, 10)).to equal true
 	end
 
 	# it 'can tell game type \'even\'' do
@@ -35,12 +40,7 @@ describe Choices do
 	# 	expect(choices1.game_type(3)).to equal :last
 	# end
 
-	# it 'mandates 2 serves from one player then 2 serves by other' do
-	# 	expect(choices1.serve_toggle(0)).to equal 0							
-	# 	expect(choices1.serve_toggle(1)).to equal 0
-	# 	expect(choices1.serve_toggle(2)).to equal 1
-	# 	expect(choices1.serve_toggle(3)).to equal 1
-	# end
+	
 
 
 	it 'says player1 serving after 0 points if starts serving' do
@@ -62,5 +62,8 @@ describe Choices do
 	it 'says player 1 serving after 4 points of 4th game if player 2 started' do
 		expect(choices2.player1_serving?(4,4)).to equal true
 	end
+
+	
+
 	
 end

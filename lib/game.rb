@@ -13,7 +13,9 @@ class Game
 
 	def deletepoint(player)
 		indexes = @points.each_index.select { |i| @points[i].winner == player }
-		@points.delete_at(indexes.last)
+		if indexes.last	
+			@points.delete_at(indexes.last)
+		end
 	end
 
 	def player_points(player)

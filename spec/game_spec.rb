@@ -30,6 +30,12 @@ describe Game do
 		expect(game.player_points(player1)).to equal 0
 	end
 
+	it 'attempting to delete point from player with no score leaves player on 0' do
+		set_score(4, 0)
+		game.deletepoint(player2)
+		expect(game.player_points(player2)).to equal 0
+	end
+
 	it 'no winner if neither player has reached 11' do
 		set_score 10, 10
 		expect(game.record_if_won_game(player2)).to be_nil

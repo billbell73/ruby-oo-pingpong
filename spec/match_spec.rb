@@ -7,7 +7,7 @@ describe Match do
 	let(:player2) {double :player}
 
 	let(:choices1) { double :choices, games_target: 2, player1_serving?: true, player1_on_left?: true }
-	let(:choices2) { double :choices, games_target: 3 }
+	let(:choices2) { double :choices, games_target: 3, player1_serving?: true, player1_on_left?: true } 
 
 	let(:choices3) { Choices.new(3, true, true)}
 
@@ -104,7 +104,7 @@ describe Match do
 		expect(match.match_winner).to be_nil
 	end
 
-	xit 'can tell if match winner in best-of-five match' do
+	it 'can tell if match winner in best-of-five match' do
 		set_score(7, 11, 7, 11, match5)
 		increment(11, match5, player1)
 		increment(11, match5, player1)
@@ -124,17 +124,29 @@ describe Match do
 		expect(match.game_score(2, player2)).to equal 4
 	end
 
-
-	it 'can decrement player1\'s score from 0-0 in second game' do
-		pending("implementing deletion across game boundaries") do
-			set_score(3, 11, 0, 0)
-			match.decrement_score(player2)
-			expect(match.games_score(1, player2)).to equal 10
-		end
+	it 'decrementing player 2 score from 7-0 in 2nd game leaves score unchanged' do
+		set_score(3, 11, 7, 0)
+		match.decrement_score(player2)
+		expect(match.current_game.player_points(player2)).to equal 0
 	end
 
+	it 'initial decrement from 0-0 in second game makes current game first game' do
+		set_score(3, 11, 0, 0)
+		match.decrement_score(player2)
+		expect(match.games.length).to equal 1
+	end
 
+	it 'decrementing two from 0-0 in second game reduces player\'s first game score by 1' do
+		set_score(3, 11, 0, 0)
+		match.decrement_score(player2)
+		expect(match.current_game.player_points(player2)).to equal 11
+		match.decrement_score(player2)
+		expect(match.current_game.player_points(player2)).to equal 10
+	end
 
+	it 'can tell score of player with most points in a game' do
+		set_score(5, 11, 3, 4)
+		expect(match.max_points_in_current_game).to equal 4
+	end
 
-	
 end

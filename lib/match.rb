@@ -43,11 +43,15 @@ class Match
 	end
 
 	def decrement_score(winner)
-		current_game.deletepoint(winner)
+		if current_game.total_points != 0
+			current_game.deletepoint(winner)
+		else
+			@games.pop
+		end
 	end
 
 	def player1_on_left?
-		@choices.player1_on_left?(@games.length)
+		@choices.player1_on_left?(@games.length, max_points_in_current_game)
 	end
 
 	def player1_serving?
@@ -60,6 +64,10 @@ class Match
 
 	def game_score(game_no, player)
 		@games[game_no - 1].player_points(player)
+	end
+
+	def max_points_in_current_game
+		[current_game.player_points(@player1), current_game.player_points(@player2)].max
 	end
 
 

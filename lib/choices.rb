@@ -13,8 +13,8 @@ class Choices
 		(@best_of / 2) + 1
 	end
 
-	def player1_on_left?(nth_game)
-		game_type(nth_game).player1_on_left?
+	def player1_on_left?(nth_game, max_points)
+		game_type(nth_game).player1_on_left?(max_points)
 	end
 
 	def game_type(nth_game)
