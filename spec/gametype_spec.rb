@@ -25,11 +25,11 @@ describe LastGame do
 	let(:last_game1) {LastGame.new(false,true)}
 
 	it 'will give normal odd-game end position before someone reaches 5' do
-		expect(last_game1.player1_on_left?(4)).to equal false
+		expect(last_game1.p1_on_left?(4)).to equal false
 	end
 
 	it 'will give opposite of normal odd-game position after first player has reached 5' do
-		expect(last_game1.player1_on_left?(5)).to equal true
+		expect(last_game1.p1_on_left?(5)).to equal true
 	end
 	
 end

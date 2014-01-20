@@ -6,13 +6,24 @@ class Match
 	attr_accessor :games
 	attr_reader :match_winner
 
-	def initialize(player1, player2, choices)
-		@player1 = player1
-		@player2 = player2
+	def initialize(choices, participant1, participant2, participant3=nil, participant4=nil)
+		if participant4
+			@p1 = [participant1, participant2]
+			@p2 = [participant3, participant4]
+			@doubles_match = true
+		else
+			@p1 = participant1
+			@p2 = participant2
+			@doubles_match = false
+		end
 		@choices = choices
 		@games = []
 		@match_winner = nil
 	end 
+
+	def doubles_match?
+		@doubles_match
+	end
 
 	def new_game
 		@games << Game.new
@@ -23,7 +34,7 @@ class Match
 	end
 
 	def increment_score(point_winner)
-		new_point = Point.new(point_winner, server, player1_on_left?)
+		new_point = Point.new(point_winner, server, p1_on_left?)
 		current_game.addpoint(new_point)
 		if current_game.record_if_won_game(point_winner)
 			finish_game(point_winner)
@@ -50,16 +61,16 @@ class Match
 		end
 	end
 
-	def player1_on_left?
-		@choices.player1_on_left?(@games.length, max_points_in_current_game)
+	def p1_on_left?
+		@choices.p1_on_left?(@games.length, max_points_in_current_game)
 	end
 
-	def player1_serving?
-		@choices.player1_serving?(@games.length, current_game.total_points)
+	def p1_serving?
+		@choices.p1_serving?(@games.length, current_game.total_points)
 	end
 
 	def server
-		player1_serving? ? @player1 : @player2
+		p1_serving? ? @p1 : @p2
 	end
 
 	def game_score(game_no, player)
@@ -67,7 +78,7 @@ class Match
 	end
 
 	def max_points_in_current_game
-		[current_game.player_points(@player1), current_game.player_points(@player2)].max
+		[current_game.player_points(@p1), current_game.player_points(@p2)].max
 	end
 
 

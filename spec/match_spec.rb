@@ -6,13 +6,13 @@ describe Match do
 	let(:player1) {double :player}
 	let(:player2) {double :player}
 
-	let(:choices1) { double :choices, games_target: 2, player1_serving?: true, player1_on_left?: true }
-	let(:choices2) { double :choices, games_target: 3, player1_serving?: true, player1_on_left?: true } 
+	let(:choices1) { double :choices, games_target: 2, p1_serving?: true, p1_on_left?: true }
+	let(:choices2) { double :choices, games_target: 3, p1_serving?: true, p1_on_left?: true } 
 
 	let(:choices3) { Choices.new(3, true, true)}
 
-	let(:match) { Match.new player1, player2, choices1 }
-	let(:match5) { Match.new player1, player2, choices2 }
+	let(:match) { Match.new choices1, player1, player2 }
+	let(:match5) { Match.new choices2, player1, player2 }
 
 	let(:point) {double :point}
 
@@ -39,17 +39,17 @@ describe Match do
 
 	it 'knows last point and next point server' do
 		set_score(1, 0)
-		expect(choices1).to receive(:player1_serving?).with(1,1)
+		expect(choices1).to receive(:p1_serving?).with(1,1)
 		match.server
 		match.increment_score(player2)
-		expect(choices1).to receive(:player1_serving?).with(1,2)
+		expect(choices1).to receive(:p1_serving?).with(1,2)
 		match.server
 	end
 
 	it 'can tell if player1 on left' do
 		set_score(3, 11, 0, 2)	
-		expect(choices1).to receive(:player1_on_left?).with(2, 2)
-		match.player1_on_left?
+		expect(choices1).to receive(:p1_on_left?).with(2, 2)
+		match.p1_on_left?
 	end
 
 	it 'can increment score from 0-0' do
@@ -148,5 +148,25 @@ describe Match do
 		set_score(5, 11, 3, 4)
 		expect(match.max_points_in_current_game).to equal 4
 	end
+
+	context 'Doubles' do
+
+		let(:player_a) { double :player }
+		let(:player_b) { double :player }
+		let(:player_c) { double :player }
+		let(:player_d) { double :player }
+
+		let(:matchdub) {Match.new(choices1,player_a,player_b,player_c,player_d)}
+
+		it 'creates doubles match when initialized with 4 players' do
+			expect(match5.doubles_match?).to equal false
+			expect(matchdub.doubles_match?).to equal true
+		end
+
+	end
+
+
+
+
 
 end
