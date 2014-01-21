@@ -32,17 +32,6 @@ describe Choices do
 		expect(choices2.p1_on_left?(5, 10)).to equal true
 	end
 
-	# it 'can tell game type \'even\'' do
-	# 	expect(choices1.game_type(2)).to equal :even
-	# end
-
-	# it 'can tell game type \'last\'' do
-	# 	expect(choices1.game_type(3)).to equal :last
-	# end
-
-	
-
-
 	it 'says player1 serving after 0 points if starts serving' do
 		expect(choices1.p1_serving?(1,0)).to equal true
 	end
@@ -62,8 +51,5 @@ describe Choices do
 	it 'says player 1 serving after 4 points of 4th game if player 2 started' do
 		expect(choices2.p1_serving?(4,4)).to equal true
 	end
-
-	
-
 	
 end

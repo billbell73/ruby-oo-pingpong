@@ -2,7 +2,6 @@ class GameType
 	def initialize(p1_starts_left, p1_first_server)
 		@p1_starts_left = p1_starts_left
 		@p1_first_server = p1_first_server
-		@five_reached_in_last_possible_game = false
 	end
 
 	def serve_toggle(points_played)

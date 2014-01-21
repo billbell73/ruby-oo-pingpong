@@ -1,10 +1,14 @@
 class Game
 
-	attr_reader :winner
+	attr_reader :game_winner, :first_partner_first_server
 
-	def initialize
+	def initialize(fp_fs=true, fp_fr=true)
 		@points = []
-		@winner = nil
+		@game_winner = nil
+
+		#for doubles
+		@first_partner_first_server = fp_fs  
+		@first_partner_first_receiver = fp_fr
 	end
 
 	def addpoint(point)
@@ -32,12 +36,25 @@ class Game
 
 	def record_if_won_game(player)
 		if (player_points(player) == 11 && opponent_points(player) <= 9) || (opponent_points(player) > 10 && two_ahead?(player))
-			@winner = player
+			@game_winner = player
 		end
 	end
 
 	def two_ahead?(player)
 		player_points(player) == opponent_points(player) + 2
+	end
+
+
+	def first_partner_serving?
+		partner_toggle == 0 ? @first_partner_first_server : !@first_partner_first_server
+	end
+
+	def first_partner_receiving?
+		partner_toggle == 0 ? @first_partner_first_receiver : !@first_partner_first_receiver
+	end
+
+	def partner_toggle
+		(total_points/4) % 2
 	end
 
 end

@@ -42,7 +42,7 @@ class Match
 	end
 
 	def games_won(player)
-		@games.count { |game| game.winner == player }
+		@games.count { |game| game.game_winner == player }
 	end
 
 	def finish_game(point_winner)
@@ -70,7 +70,13 @@ class Match
 	end
 
 	def server
-		p1_serving? ? @p1 : @p2
+		if @doubles_match
+			pair = p1_serving? ? @p1 : @p2
+			partner_index = current_game.first_partner_serving? ? 0 : 1
+			pair[partner_index]
+		else
+			p1_serving? ? @p1 : @p2
+		end
 	end
 
 	def game_score(game_no, player)

@@ -1,5 +1,6 @@
 require 'match'
 require 'choices'
+require 'gametype'
 
 describe Match do
 
@@ -156,13 +157,30 @@ describe Match do
 		let(:player_c) { double :player }
 		let(:player_d) { double :player }
 
-		let(:matchdub) {Match.new(choices1,player_a,player_b,player_c,player_d)}
+		let(:matchdub) { Match.new(choices3,player_a,player_b,player_c,player_d) }
 
 		it 'creates doubles match when initialized with 4 players' do
 			expect(match5.doubles_match?).to equal false
 			expect(matchdub.doubles_match?).to equal true
 		end
 
+		it 'knows which pair is serving' do
+			set_score(0, 3, 0, 0, matchdub)
+			expect(matchdub.p1_serving?).to equal false
+		end
+
+		it 'knows which of a pair is serving at start' do
+			set_score(0, 0, 0, 0, matchdub)
+			expect(matchdub.server).to equal player_a
+		end
+
+		it 'know which of pair is serving after 7 points' do
+			set_score(7, 0, 0, 0, matchdub)
+			expect(matchdub.server).to equal player_d
+		end
+
+		it 'knows which of pair2 is serving when player_d serves first for them'
+		
 	end
 
 
