@@ -1,19 +1,19 @@
 require 'match'
-require 'choices'
-require 'gametype'
+require 'match_choices'
+require 'game_type'
 
 describe Match do
 
 	let(:player1) {double :player}
 	let(:player2) {double :player}
 
-	let(:choices1) { double :choices, games_target: 2, p1_serving?: true, p1_on_left?: true }
-	let(:choices2) { double :choices, games_target: 3, p1_serving?: true, p1_on_left?: true } 
+	let(:match_choices1) { double :match_choices, games_target: 2, p1_serving?: true, p1_on_left?: true }
+	let(:match_choices2) { double :match_choices, games_target: 3, p1_serving?: true, p1_on_left?: true } 
 
-	let(:choices3) { Choices.new(3, true, true)}
+	let(:match_choices3) { MatchChoices.new(3, true, true)}
 
-	let(:match) { Match.new choices1, player1, player2 }
-	let(:match5) { Match.new choices2, player1, player2 }
+	let(:match) { Match.new match_choices1, player1, player2 }
+	let(:match5) { Match.new match_choices2, player1, player2 }
 
 	let(:point) {double :point}
 
@@ -40,16 +40,16 @@ describe Match do
 
 	it 'knows last point and next point server' do
 		set_score(1, 0)
-		expect(choices1).to receive(:p1_serving?).with(1,1)
+		expect(match_choices1).to receive(:p1_serving?).with(1,1)
 		match.server
 		match.increment_score(player2)
-		expect(choices1).to receive(:p1_serving?).with(1,2)
+		expect(match_choices1).to receive(:p1_serving?).with(1,2)
 		match.server
 	end
 
 	it 'can tell if player1 on left' do
 		set_score(3, 11, 0, 2)	
-		expect(choices1).to receive(:p1_on_left?).with(2, 2)
+		expect(match_choices1).to receive(:p1_on_left?).with(2, 2)
 		match.p1_on_left?
 	end
 
@@ -157,7 +157,7 @@ describe Match do
 		let(:player_c) { double :player }
 		let(:player_d) { double :player }
 
-		let(:matchdub) { Match.new(choices3,player_a,player_b,player_c,player_d) }
+		let(:matchdub) { Match.new(match_choices3,player_a,player_b,player_c,player_d) }
 
 		it 'creates doubles match when initialized with 4 players' do
 			expect(match5.doubles_match?).to equal false
@@ -178,13 +178,7 @@ describe Match do
 			set_score(7, 0, 0, 0, matchdub)
 			expect(matchdub.server).to equal player_d
 		end
-
-		it 'knows which of pair2 is serving when player_d serves first for them'
 		
 	end
-
-
-
-
 
 end

@@ -1,4 +1,4 @@
-class Choices
+class MatchChoices
 
 	def initialize(no_of_games, p1_starts_left, p1_first_server)
 		@best_of = no_of_games

@@ -1,14 +1,13 @@
+require 'game_choices'
+
 class Game
 
-	attr_reader :game_winner, :first_partner_first_server
+	attr_reader :game_winner, :game_choices
 
-	def initialize(fp_fs=true, fp_fr=true)
+	def initialize(game_choices=GameChoices.new(true,true))
 		@points = []
 		@game_winner = nil
-
-		#for doubles
-		@first_partner_first_server = fp_fs  
-		@first_partner_first_receiver = fp_fr
+		@game_choices = game_choices  #for doubles
 	end
 
 	def addpoint(point)
@@ -45,16 +44,5 @@ class Game
 	end
 
 
-	def first_partner_serving?
-		partner_toggle == 0 ? @first_partner_first_server : !@first_partner_first_server
-	end
-
-	def first_partner_receiving?
-		partner_toggle == 0 ? @first_partner_first_receiver : !@first_partner_first_receiver
-	end
-
-	def partner_toggle
-		(total_points/4) % 2
-	end
-
+	
 end

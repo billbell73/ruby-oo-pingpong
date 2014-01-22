@@ -1,4 +1,4 @@
-require 'gametype'
+require 'game_type'
 
 describe GameType do
 

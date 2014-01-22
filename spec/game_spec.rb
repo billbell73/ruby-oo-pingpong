@@ -6,8 +6,8 @@ describe Game do
 	let(:player2) {double :player}
 
 	let(:game) { Game.new }
-	let(:point1) { double :point, winner: player1}
-	let(:point2) { double :point, winner: player2}
+	let(:point1) { double :point, winner: player1 }
+	let(:point2) { double :point, winner: player2 }
 
 
 	def set_score player1_points, player2_points
@@ -76,33 +76,33 @@ describe Game do
 		expect(game.total_points).to equal 27
 	end
 
-	context 'Doubles' do
+	# context 'Doubles' do
 
-		let(:gamedub) { gamedub = Game.new(true, true) }
+	# 	let(:gamedub) { gamedub = Game.new(true, true) }
 
-		it 'knows which partner of first pair to serve is first server' do
-			expect(gamedub.first_partner_first_server).to equal true
-		end
+	# 	it 'knows which partner of first pair to serve is first server' do
+	# 		expect(gamedub.first_partner_first_server).to equal true
+	# 	end
 
-		it 'knows which partner serving for second point' do
-			gamedub.stub(:total_points).and_return(1)
-			expect(gamedub.first_partner_serving?).to equal true
-		end
+	# 	it 'knows which partner serving for second point' do
+	# 		gamedub.stub(:total_points).and_return(1)
+	# 		expect(gamedub.first_partner_serving?).to equal true
+	# 	end
 
-		it 'knows which partner serving for sixth point' do
-			gamedub.stub(:total_points).and_return(5)
-			expect(gamedub.first_partner_serving?).to equal false
-		end
+	# 	it 'knows which partner serving for sixth point' do
+	# 		gamedub.stub(:total_points).and_return(5)
+	# 		expect(gamedub.first_partner_serving?).to equal false
+	# 	end
 
-		it 'knows which partner receiving for second point' do
-			gamedub.stub(:total_points).and_return(1)
-			expect(gamedub.first_partner_receiving?).to equal true
-		end
-
-
+	# 	it 'knows which partner receiving for second point' do
+	# 		gamedub.stub(:total_points).and_return(1)
+	# 		expect(gamedub.first_partner_receiving?).to equal true
+	# 	end
 
 
-	end
+
+
+	# end
 
 
 end

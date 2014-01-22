@@ -6,7 +6,7 @@ class Match
 	attr_accessor :games
 	attr_reader :match_winner
 
-	def initialize(choices, participant1, participant2, participant3=nil, participant4=nil)
+	def initialize(match_choices, participant1, participant2, participant3=nil, participant4=nil)
 		if participant4
 			@p1 = [participant1, participant2]
 			@p2 = [participant3, participant4]
@@ -16,7 +16,7 @@ class Match
 			@p2 = participant2
 			@doubles_match = false
 		end
-		@choices = choices
+		@match_choices = match_choices
 		@games = []
 		@match_winner = nil
 	end 
@@ -46,7 +46,7 @@ class Match
 	end
 
 	def finish_game(point_winner)
-		if games_won(point_winner) == @choices.games_target
+		if games_won(point_winner) == @match_choices.games_target
 			@match_winner = point_winner
 		else
 			new_game
@@ -62,17 +62,17 @@ class Match
 	end
 
 	def p1_on_left?
-		@choices.p1_on_left?(@games.length, max_points_in_current_game)
+		@match_choices.p1_on_left?(@games.length, max_points_in_current_game)
 	end
 
 	def p1_serving?
-		@choices.p1_serving?(@games.length, current_game.total_points)
+		@match_choices.p1_serving?(@games.length, current_game.total_points)
 	end
 
 	def server
 		if @doubles_match
 			pair = p1_serving? ? @p1 : @p2
-			partner_index = current_game.first_partner_serving? ? 0 : 1
+			partner_index = current_game.game_choices.first_partner_serving?(current_game.total_points, p1_serving?) ? 0 : 1
 			pair[partner_index]
 		else
 			p1_serving? ? @p1 : @p2
