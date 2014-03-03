@@ -61,7 +61,7 @@ describe Game do
 	 	expect(game.record_if_won_game(player1)).to be_nil
 	end
 
-	it 'if player 2 has more than 11, player 1 wins on 13' do
+	it 'if player 2 has 11, player 1 wins on 13' do
 		set_score 13, 11
 		expect(game.record_if_won_game(player1)).to equal player1
 	end

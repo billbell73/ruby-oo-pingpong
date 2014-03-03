@@ -174,7 +174,7 @@ describe Match do
 			expect(matchdub.server).to equal player_a
 		end
 
-		it 'know which of pair is serving after 7 points' do
+		it 'knows which of pair is serving after 7 points' do
 			set_score(7, 0, 0, 0, matchdub)
 			expect(matchdub.server).to equal player_d
 		end

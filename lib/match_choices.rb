@@ -31,5 +31,4 @@ class MatchChoices
 		game_type(nth_game).p1_serving?(points_played)
 	end
 
-
 end
