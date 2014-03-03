@@ -4,7 +4,7 @@ describe GameType do
 
 	let(:game) { GameType.new(true,true)}
 
-	it 'mandates 2 serves from one player then 2 serves by other' do
+	it 'mandates 2 serves from one player then 2 serves by other in normal play' do
 		expect(game.serve_toggle(0)).to equal 0							
 		expect(game.serve_toggle(1)).to equal 0
 		expect(game.serve_toggle(2)).to equal 1

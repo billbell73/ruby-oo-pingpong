@@ -72,7 +72,7 @@ class Match
 	def server
 		if @doubles_match
 			pair = p1_serving? ? @p1 : @p2
-			partner_index = current_game.game_choices.server_is_index0?(current_game.total_points, p1_serving?) ? 0 : 1
+			partner_index = current_game.game_choices.server_is_first_partner?(current_game.total_points, p1_serving?) ? 0 : 1
 			pair[partner_index]
 		else
 			p1_serving? ? @p1 : @p2

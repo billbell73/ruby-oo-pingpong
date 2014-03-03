@@ -1,35 +1,35 @@
 class GameChoices
 
-	attr_reader :first_partner_first_server
+	attr_reader :initial_server_first_partner
 
-	def initialize(fp_fs, fp_fr, p1_s=true )
-		@first_partner_first_server = fp_fs  
-		@first_partner_first_receiver = fp_fr
+	def initialize(is_fp, ir_fp, p1_s=true )
+		@initial_server_first_partner = is_fp  
+		@initial_receiver_first_partner = ir_fp
 		@p1_started_game_serving = p1_s
 	end
 
-	def server_is_index0?(points_played, p1_serving)
+	def server_is_first_partner?(points_played, p1_serving)
 		if(@p1_started_game_serving == p1_serving)
-			first_serving_pair_first_partner_involved?(points_played)
+			initial_serving_pair_first_partner_involved?(points_played)
 		else 
-			first_receiving_pair_first_partner_involved?(points_played)
+			initial_receiving_pair_first_partner_involved?(points_played)
 		end
 	end
 
-	def receiver_is_index0?(points_played, p1_serving)
+	def receiver_is_first_partner?(points_played, p1_serving)
 		if(@p1_started_game_serving == p1_serving)
-			first_receiving_pair_first_partner_involved?(points_played)
+			initial_receiving_pair_first_partner_involved?(points_played)
 		else 
-			first_serving_pair_first_partner_involved?(points_played)
+			initial_serving_pair_first_partner_involved?(points_played)
 		end
 	end
 
-	def first_receiving_pair_first_partner_involved?(points_played)
-		partner_toggle(points_played, 0) == 0 ? @first_partner_first_receiver : !@first_partner_first_receiver
+	def initial_receiving_pair_first_partner_involved?(points_played)
+		partner_toggle(points_played, 0) == 0 ? @initial_receiver_first_partner : !@initial_receiver_first_partner
 	end
 
-	def first_serving_pair_first_partner_involved?(points_played)
-		partner_toggle(points_played, 2) == 0 ? @first_partner_first_server : !@first_partner_first_server
+	def initial_serving_pair_first_partner_involved?(points_played)
+		partner_toggle(points_played, 2) == 0 ? @initial_server_first_partner : !@initial_server_first_partner
 	end
 
 	private
