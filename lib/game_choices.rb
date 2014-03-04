@@ -25,11 +25,13 @@ class GameChoices
 	end
 
 	def initial_receiving_pair_first_partner_involved?(points_played)
-		partner_toggle(points_played, 0) == 0 ? @initial_receiver_first_partner : !@initial_receiver_first_partner
+		partner_toggle(points_played, 0) == 0 ? 
+			@initial_receiver_first_partner : !@initial_receiver_first_partner
 	end
 
 	def initial_serving_pair_first_partner_involved?(points_played)
-		partner_toggle(points_played, 2) == 0 ? @initial_server_first_partner : !@initial_server_first_partner
+		partner_toggle(points_played, 2) == 0 ? 
+			@initial_server_first_partner : !@initial_server_first_partner
 	end
 
 	private

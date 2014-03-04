@@ -4,7 +4,8 @@ describe Match do
 
 	let(:player1) {double :player}
 	let(:player2) {double :player}
-	let(:match_choices1) { double :match_choices, games_target: 2, p1_serving?: true, p1_on_left?: true }
+	let(:match_choices1) { double :match_choices, games_target: 2, 
+																p1_serving?: true, p1_on_left?: true }
 	
 	let(:match) { Match.new match_choices1, player1, player2 }
 
@@ -102,7 +103,9 @@ describe Match do
 
 	context 'Best of 5-game match' do
 
-		let(:match_choices2) { double :match_choices, games_target: 3, p1_serving?: true, p1_on_left?: true } 
+		let(:match_choices2) { double :match_choices, games_target: 3, 
+																									p1_serving?: true, 
+																									p1_on_left?: true } 
 		let(:match5) { Match.new match_choices2, player1, player2 }
 
 		it 'can tell if match winner in best-of-five match' do
@@ -119,20 +122,21 @@ describe Match do
 
 	context 'Decrementing score' do
 
-		it 'decrementing player 2 score from 7-0 in 2nd game leaves score unchanged' do
+		it 'decrementing player 2 score at 7-0 in game leaves score unchanged' do
 			set_score(3, 11, 7, 0)
 			match.decrement_score(player2)
 			expect(match.current_game.player_points(player2)).to equal 0
 		end
 
-		it 'initial decrement from 0-0 in second game makes current game first game' do
+		it 'initial decrement from 0-0 in 2nd game makes current game first game' do
 			set_score(3, 11, 0, 0)
 			expect(match.games.length).to equal 2
 			match.decrement_score(player2)
 			expect(match.games.length).to equal 1
 		end
 
-		it 'decrementing two from 0-0 in second game reduces player\'s first game score by 1' do
+		it 'decrementing 2 points from 0-0 in 2nd game reduces '\
+																				'player\'s 1st game score by 1' do
 			set_score(3, 11, 0, 0)
 			match.decrement_score(player2)
 			expect(match.current_game.player_points(player2)).to equal 11
@@ -147,8 +151,15 @@ describe Match do
 		let(:player_1a) { double :player }
 		let(:player_2a) { double :player }
 
-		let(:matchdub) { Match.new(match_choices1,player1,player_1a,player2,player_2a) }
-		let(:game_choices1) {double :game_choices, server_is_first_partner?: false}
+		let(:matchdub) { Match.new(match_choices1,
+																player1,
+																player_1a,
+																player2,
+																player_2a) }
+
+		let(:game_choices1) {double :game_choices, server_is_first_partner?: false, 
+																							 receiver_is_first_partner?: true}
+																							 
 		let(:game1) {double :game, game_choices: game_choices1, total_points: 4}
 
 		it 'creates match as doubles match only when initialized with 4 players' do
@@ -173,6 +184,11 @@ describe Match do
 			expect(matchdub.server).to equal player_1a
 		end 
 
+		it 'will specify which player is receiving' do
+			matchdub.games << game1
+			expect(matchdub.doubles_receiver).to equal player2
+		end
+		
 	end
 
 end
