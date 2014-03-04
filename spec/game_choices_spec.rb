@@ -10,16 +10,19 @@ describe 'GameChoices' do
 			expect(game_choices1.initial_server_first_partner).to equal true
 		end
 
-		it 'knows which of initial receiver pair is involved in first shot of a point' do
-			expect(game_choices1.initial_receiving_pair_first_partner_involved?(5)).to equal false
+		it 'knows which of initial receiver pair is involved in 1st shot of point' do
+			expect(game_choices1.initial_receiving_pair_first_partner_involved?(5))
+																																.to equal false
 		end
 
-		it 'knows which of initial serving pair is involved in first shot of point 1' do
-			expect(game_choices1.initial_serving_pair_first_partner_involved?(0)).to equal true
+		it 'knows which of initial server pair is involved in 1st shot of point 1' do
+			expect(game_choices1.initial_serving_pair_first_partner_involved?(0))
+																																.to equal true
 		end
 
-		it 'knows which of initial server pair is involved in first shot of point 6' do
-			expect(game_choices1.initial_serving_pair_first_partner_involved?(5)).to equal false
+		it 'knows which of initial server pair is involved in 1st shot of point 6' do
+			expect(game_choices1.initial_serving_pair_first_partner_involved?(5))
+																																.to equal false
 		end
 
 		it 'knows which partner of pair is serving for 3rd point' do

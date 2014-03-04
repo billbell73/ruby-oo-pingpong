@@ -34,7 +34,8 @@ class Game
 	end
 
 	def record_if_won_game(player)
-		if (player_points(player) == 11 && opponent_points(player) <= 9) || (opponent_points(player) > 10 && two_ahead?(player))
+		if (player_points(player) == 11 && opponent_points(player) <= 9) || 
+				(opponent_points(player) > 10 && two_ahead?(player))
 			@game_winner = player
 		end
 	end
